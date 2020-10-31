@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Set;
 
 
 public class NewCustomer {
@@ -31,4 +32,20 @@ public class NewCustomer {
         this.location = location;
         this.income = income;
     }
+
+
+	public boolean onlyPersonalLoan() {		
+		return this.income.compareTo(new BigDecimal("3000")) <= 0 
+				&& !this.location.toLowerCase().equals("sp");
+	}
+
+
+	public ModalidadesLoanResponse toPersonalLoan() {
+		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4)));
+	}
+
+
+	public String getName() {
+		return this.name;
+	}
 }

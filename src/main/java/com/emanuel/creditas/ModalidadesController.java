@@ -10,8 +10,13 @@ import javax.validation.Valid;
 public class ModalidadesController {
 
     @PostMapping(value = "/api/modalidades")
-    public void search(@RequestBody @Valid NewCustomer request){
+    public ModalidadesLoanResponse search(@RequestBody @Valid NewCustomer request){
 
+        if (request.onlyPersonalLoan()) {
+            return request.toPersonalLoan();
+        }
+                
+        return null;
     }
 
 }
