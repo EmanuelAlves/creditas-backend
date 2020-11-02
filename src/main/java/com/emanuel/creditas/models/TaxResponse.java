@@ -1,4 +1,4 @@
-package com.emanuel.creditas;
+package com.emanuel.creditas.models;
 
 public class TaxResponse {
 

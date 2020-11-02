@@ -1,4 +1,4 @@
-package com.emanuel.creditas;
+package com.emanuel.creditas.models;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -48,4 +48,39 @@ public class NewCustomer {
 	public String getName() {
 		return this.name;
 	}
+
+
+	public boolean garantiaLoan() {
+		return this.income.compareTo(new BigDecimal("3000")) <= 0 
+				&& this.location.toLowerCase().equals("sp")
+				&& this.age < 30;
+	}
+	
+	
+	public boolean garantia2Loan() {
+		return this.income.compareTo(new BigDecimal("3000")) > 0 
+				&& this.income.compareTo(new BigDecimal("5000")) <= 0
+				&& this.location.toLowerCase().equals("sp");
+	}
+	
+
+	public ModalidadesLoanResponse toPersonalLoanAndGarantia() {
+		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4), 
+				new TaxResponse(LoanType.GARANTIA, 3)));
+	}
+
+
+	public boolean consignadoLoan() {
+		return this.income.compareTo(new BigDecimal("5000")) >= 0
+				&& this.location.toLowerCase().equals("sp")
+				&& this.age < 30;
+	}
+
+	
+	public ModalidadesLoanResponse toPersonalAndConsignado() {
+		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4), 
+				new TaxResponse(LoanType.GARANTIA, 3), new TaxResponse(LoanType.CONSIGNADO, 2)));
+	}
+
+
 }
