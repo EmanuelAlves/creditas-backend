@@ -28,15 +28,15 @@ public class NewCustomer {
     public NewCustomer(@NotBlank String name, @NotBlank @CPF String cpf, @Positive int age, @NotBlank String location, @Positive @NotNull BigDecimal income) {
         this.name = name;
         this.cpf = cpf;
-        this.age = age;
-        this.location = location;
-        this.income = income;
+        this.setAge(age);
+        this.setLocation(location);
+        this.setIncome(income);
     }
 
 
 	public boolean onlyPersonalLoan() {		
-		return this.income.compareTo(new BigDecimal("3000")) <= 0 
-				&& !this.location.toLowerCase().equals("sp");
+		return this.getIncome().compareTo(new BigDecimal("3000")) <= 0 
+				&& !this.getLocation().toLowerCase().equals("sp");
 	}
 
 
@@ -44,42 +44,39 @@ public class NewCustomer {
 		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4)));
 	}
 
-
+	
 	public String getName() {
 		return this.name;
 	}
 
-
-	public boolean garantiaLoan() {
-		return this.income.compareTo(new BigDecimal("3000")) <= 0 
-				&& this.location.toLowerCase().equals("sp")
-				&& this.age < 30;
-	}
 	
-	
-	public boolean garantia2Loan() {
-		return this.income.compareTo(new BigDecimal("3000")) > 0 
-				&& this.income.compareTo(new BigDecimal("5000")) <= 0
-				&& this.location.toLowerCase().equals("sp");
-	}
-	
-
-	public ModalidadesLoanResponse toPersonalLoanAndGarantia() {
-		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4), 
-				new TaxResponse(LoanType.GARANTIA, 3)));
+	public BigDecimal getIncome() {
+		return income;
 	}
 
 
-	public boolean consignadoLoan() {
-		return this.income.compareTo(new BigDecimal("5000")) >= 0
-				&& this.location.toLowerCase().equals("sp")
-				&& this.age < 30;
+	public void setIncome(BigDecimal income) {
+		this.income = income;
 	}
 
-	
-	public ModalidadesLoanResponse toPersonalAndConsignado() {
-		return new ModalidadesLoanResponse(this, Set.of(new TaxResponse(LoanType.PERSONAL, 4), 
-				new TaxResponse(LoanType.GARANTIA, 3), new TaxResponse(LoanType.CONSIGNADO, 2)));
+
+	public String getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 
